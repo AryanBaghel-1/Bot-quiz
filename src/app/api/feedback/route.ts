@@ -27,9 +27,9 @@ export async function POST(request: Request) {
     if (!payload?.submission) {
       return NextResponse.json({ error: "Submission is required." }, { status: 400 });
     }
-
+    
     const apiKey = process.env.GEMINI_API_KEY;
-    const model = process.env.GEMINI_MODEL ?? "gemini-1.5-pro";
+    const model = process.env.GEMINI_MODEL ?? "gemini-2.5";
 
     if (!apiKey) {
       const fallback = `You scored ${payload.submission.score}/${payload.submission.total} (${payload.submission.percentage}%). Add GEMINI_API_KEY to enable detailed AI feedback.`;

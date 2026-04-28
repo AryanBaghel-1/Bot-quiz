@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     // }
 
     const apiKey = process.env.GEMINI_API_KEY;
-    const model = process.env.GEMINI_MODEL ?? "gemini-1.5-pro";
+    const model = process.env.GEMINI_MODEL ?? "gemini-2.5";
 
     if (!apiKey) {
       return NextResponse.json(
