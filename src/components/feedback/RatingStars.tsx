@@ -15,7 +15,11 @@ export function RatingStars({ rating, onChange }: RatingStarsProps) {
             key={value}
             type="button"
             onClick={() => onChange(value)}
-            className={`text-3xl leading-none transition-transform duration-150 hover:scale-110 ${active ? "text-emerald-500" : "text-slate-300"}`}
+            className={`text-4xl leading-none transition-all duration-300 hover:scale-125 focus:outline-none ${
+              active 
+                ? "text-[#d4af37] drop-shadow-[0_0_10px_rgba(212,175,55,0.6)]" 
+                : "text-white/10 hover:text-[#d4af37]/50"
+            }`}
             aria-label={`Rate ${value} star${value > 1 ? "s" : ""}`}
           >
             ★

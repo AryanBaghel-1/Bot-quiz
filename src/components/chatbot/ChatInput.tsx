@@ -23,14 +23,14 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
   };
 
   return (
-    <form onSubmit={onSubmit} className="slide-up flex items-center gap-2">
+    <form onSubmit={onSubmit} className="slide-up flex flex-col md:flex-row items-center gap-3 w-full">
       <input
         value={input}
         onChange={(event) => setInput(event.target.value)}
-        placeholder="Ask any history question..."
-        className="h-11 flex-1 rounded-xl border border-slate-300 bg-white/90 px-3 text-sm text-slate-900 outline-none transition-all focus:border-violet-500 focus:ring-2 focus:ring-violet-100"
+        placeholder="Ask the Oracle an ancient query..."
+        className="h-14 flex-1 w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md px-5 text-[15px] text-[#f5d27a] placeholder:text-[#9ca3af] outline-none transition-all duration-300 focus:border-[#d4af37]/50 focus:bg-black/60 focus:shadow-[0_0_15px_rgba(212,175,55,0.15)]"
       />
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isLoading} className="w-full md:w-auto h-14 px-8 tracking-wider">
         Send
       </Button>
     </form>

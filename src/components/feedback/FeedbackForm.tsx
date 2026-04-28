@@ -15,20 +15,27 @@ export function FeedbackForm({ onSubmit, isLoading }: FeedbackFormProps) {
   const [note, setNote] = useState("");
 
   return (
-    <Card className="slide-up space-y-4">
-      <h3 className="text-lg font-semibold text-slate-900">Get AI Feedback</h3>
-      <div className="space-y-2">
-        <p className="text-sm text-slate-700">How confident did you feel in this quiz?</p>
+    <Card className="slide-up space-y-6 p-6 border-white/10 bg-black/40 backdrop-blur-md rounded-xl shadow-[0_0_20px_rgba(212,175,55,0.05)]">
+      <h3 className="text-xl font-bold bg-gradient-to-r from-[#f5d27a] via-[#e6c065] to-[#d4af37] bg-clip-text text-transparent drop-shadow-[0_0_5px_rgba(212,175,55,0.3)]">
+        Seek Oracle's Insight
+      </h3>
+      
+      <div className="space-y-3">
+        <p className="text-sm font-medium text-[#9ca3af] uppercase tracking-wider">
+          Confidence Level
+        </p>
         <RatingStars rating={rating} onChange={setRating} />
       </div>
 
-      <label className="block space-y-1">
-        <span className="text-sm font-medium text-slate-700">Optional note</span>
+      <label className="block space-y-2 pt-2">
+        <span className="text-sm font-medium text-[#9ca3af] uppercase tracking-wider block">
+          Scrolls of Thought (Optional)
+        </span>
         <textarea
           value={note}
           onChange={(event) => setNote(event.target.value)}
-          className="min-h-24 w-full rounded-xl border border-slate-300 bg-white/90 px-3 py-2 text-sm text-slate-900 outline-none transition-all focus:border-violet-500 focus:ring-2 focus:ring-violet-100"
-          placeholder="Example: I struggle with timeline-based questions."
+          className="min-h-[120px] w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md px-4 py-3 text-[15px] text-[#f5d27a] placeholder:text-[#9ca3af]/50 outline-none transition-all duration-300 focus:border-[#d4af37]/50 focus:bg-black/60 focus:shadow-[inset_0_0_15px_rgba(212,175,55,0.1)] resize-y scrollbar-thin scrollbar-thumb-[#d4af37]/40"
+          placeholder="e.g. My knowledge of the Byzantine Empire is lacking..."
         />
       </label>
 
@@ -38,8 +45,9 @@ export function FeedbackForm({ onSubmit, isLoading }: FeedbackFormProps) {
           await onSubmit({ rating, note });
         }}
         disabled={isLoading}
+        className="w-full text-lg py-6 mt-2"
       >
-        {isLoading ? "Analyzing..." : "Analyze My Quiz"}
+        {isLoading ? "Consulting the Stars..." : "Analyze Archives"}
       </Button>
     </Card>
   );

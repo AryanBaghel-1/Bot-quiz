@@ -26,6 +26,28 @@ function pickRandomQuestions() {
   return shuffled.slice(0, Math.min(10, shuffled.length));
 }
 
+// Simple floating particles for sub-pages
+const Particles = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 fixed">
+      {[...Array(15)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full bg-[#d4af37] opacity-20 particle-float"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            width: `${Math.random() * 3 + 1}px`,
+            height: `${Math.random() * 3 + 1}px`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${Math.random() * 15 + 15}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 export default function QuizPage() {
   const router = useRouter();
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
@@ -37,8 +59,7 @@ export default function QuizPage() {
     setIsHydrated(true);
   }, []);
 
-  const { answers, answeredCount, score, percentage, submitted, selectAnswer, submitQuiz } =
-    useQuiz(selectedQuestions);
+  const { answers, answeredCount, score, percentage, submitted, selectAnswer, submitQuiz } = useQuiz(selectedQuestions);
 
   const { seconds } = useTimer(!submitted);
   const remainingSeconds = Math.max(0, QUIZ_DURATION_SECONDS - seconds);
@@ -84,7 +105,6 @@ export default function QuizPage() {
     if (!isHydrated || submitted || !isTimeUp) {
       return;
     }
-
     handleSubmit();
   }, [isHydrated, submitted, isTimeUp]);
 
@@ -97,60 +117,71 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="app-shell min-h-screen">
+    <div className="bg-[#000000] text-[#d1d5db] relative flex flex-col min-h-screen">
+      <Particles />
       <Navbar />
-      <div className="mx-auto flex w-full max-w-8xl">
-        <Sidebar />
-        <main className="flex-1 space-y-4 p-4 md:p-6">
-          <h1 className="slide-up bg-gradient-to-r from-violet-700 via-purple-600 to-fuchsia-600 bg-clip-text text-3xl font-bold text-transparent">
-            History MCQ Quiz
-          </h1>
+      <div className="mx-auto flex w-full max-w-8xl flex-1 z-10 relative">
+        <Sidebar className="hidden md:block" />
+        <main className="flex-1 space-y-8 p-4 md:p-8 w-full mt-10 md:mt-2 max-w-4xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 slide-up">
+            <h1 className="bg-gradient-to-r from-[#f5d27a] via-[#e6c065] to-[#d4af37] bg-clip-text text-3xl font-bold text-transparent drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">
+              Chronicles Assessment
+            </h1>
 
-          <div
-            className={`slide-up inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold ${
-              remainingSeconds <= 15
-                ? "border-rose-200 bg-rose-50 text-rose-700"
-                : "border-violet-200 bg-violet-50 text-violet-700"
-            }`}
-          >
-            <span>Time Left:</span>
-            <span>{formatTime(remainingSeconds)}</span>
+            <div
+              className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-bold tracking-widest uppercase transition-colors duration-300 ${
+                remainingSeconds <= 15
+                  ? "border-red-900/50 bg-red-950/30 text-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]"
+                  : "border-[#d4af37]/30 bg-[#d4af37]/10 text-[#f5d27a] shadow-[0_0_10px_rgba(212,175,55,0.1)]"
+              }`}
+            >
+              <span>Sands Remaining:</span>
+              <span className="text-lg tabular-nums">{formatTime(remainingSeconds)}</span>
+            </div>
           </div>
 
           {!isHydrated ? (
-            <div className="rounded-xl border border-slate-200 bg-gradient-to-r from-white/80 to-purple-50/60 p-4 text-sm text-slate-600">
-              Questions are displaying...
+            <div className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-md p-6 text-center text-[#9ca3af] animate-pulse">
+              Unearthing ancient scrolls...
             </div>
           ) : (
-            <>
-          <ProgressBar current={answeredCount} total={selectedQuestions.length} />
+            <div className="space-y-8">
+              <ProgressBar current={answeredCount} total={selectedQuestions.length} />
+              
+              <div className="space-y-6">
+                {selectedQuestions.map((question) => (
+                  <QuestionCard
+                    key={question.id}
+                    question={question}
+                    selectedOption={answers[question.id]}
+                    onSelect={(optionIndex) => selectAnswer(question.id, optionIndex)}
+                    disabled={submitted || isTimeUp}
+                  />
+                ))}
+              </div>
 
-          {selectedQuestions.map((question) => (
-            <QuestionCard
-              key={question.id}
-              question={question}
-              selectedOption={answers[question.id]}
-              onSelect={(optionIndex) => selectAnswer(question.id, optionIndex)}
-              disabled={submitted || isTimeUp}
-            />
-          ))}
-
-          {!submitted ? (
-            <Button onClick={handleSubmit} disabled={!allAnswered || isTimeUp}>
-              Submit Quiz
-            </Button>
-          ) : (
-            <div className="space-y-3">
-              <ResultBox
-                score={score}
-                total={selectedQuestions.length}
-                percentage={percentage}
-                elapsedSeconds={submittedAt ?? seconds}
-              />
-              <Button onClick={() => router.push("/feedback")}>Go to Feedback</Button>
+              {!submitted ? (
+                <div className="pt-4 flex justify-end">
+                  <Button onClick={handleSubmit} disabled={!allAnswered || isTimeUp} className="w-full md:w-auto px-10 py-6 text-lg tracking-wider font-semibold rounded-xl">
+                    Seal Answers
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-6 pt-4 slide-up">
+                  <ResultBox
+                    score={score}
+                    total={selectedQuestions.length}
+                    percentage={percentage}
+                    elapsedSeconds={submittedAt ?? seconds}
+                  />
+                  <div className="flex justify-center">
+                    <Button onClick={() => router.push("/feedback")} className="px-8 py-5 rounded-xl">
+                      Consult the Oracle (Feedback)
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-            </>
           )}
         </main>
       </div>

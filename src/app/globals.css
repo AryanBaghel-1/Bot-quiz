@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f5f7ff;
-  --foreground: #111827;
+  --background: #000000;
+  --foreground: #d1d5db;
 }
 
 @theme inline {
@@ -12,62 +12,63 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background:
-    radial-gradient(1400px 600px at 0% 0%, #e0c3fc 0%, transparent 45%),
-    radial-gradient(1200px 500px at 100% 20%, #06b6d4 0%, transparent 45%),
-    linear-gradient(180deg, #f5f3ff 0%, #ecfdf5 100%);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
+  margin: 0;
 }
 
+/* Custom Highlight */
 ::selection {
-  background: #d8b4fe;
-  color: #5b21b6;
+  background: rgba(212, 175, 55, 0.4);
+  color: #f5d27a;
 }
 
-.app-shell {
-  background: linear-gradient(180deg, #f5f3ff, #ecfdf5);
-}
-
-.surface {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px);
-}
-
+/* Animations */
 .fade-in {
-  animation: fadeIn 0.5s ease-out both;
+  animation: fadeIn 0.8s ease-out both;
 }
 
 .slide-up {
-  animation: slideUp 0.45s ease-out both;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.pulse-soft {
-  animation: pulseSoft 2.2s ease-in-out infinite;
+.particle-float {
+  animation: float 20s infinite linear;
+}
+
+.zoom-in {
+  animation: zoomIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(50px) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -75,12 +76,31 @@ body {
   }
 }
 
-@keyframes pulseSoft {
-  0%,
-  100% {
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
     transform: scale(1);
   }
-  50% {
-    transform: scale(1.03);
-  }
+}
+
+/* Custom Scrollbar for Chat Window */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(212, 175, 55, 0.6);
 }
