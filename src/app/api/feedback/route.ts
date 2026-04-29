@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     }
     
     const apiKey = process.env.GEMINI_API_KEY;
-    const model = process.env.GEMINI_MODEL ?? "gemini-1.5-flash";
+    const model = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
 
     if (!apiKey) {
       const fallback = `You scored ${payload.submission.score}/${payload.submission.total} (${payload.submission.percentage}%). Add GEMINI_API_KEY to enable detailed AI feedback.`;
