@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     // }
 
     const apiKey = process.env.GEMINI_API_KEY;
-    const model = process.env.GEMINI_MODEL ?? "gemini-2.5";
+    const model = process.env.GEMINI_MODEL ?? "gemini-1.5-flash";
 
     if (!apiKey) {
       return NextResponse.json(
@@ -86,3 +86,5 @@ export async function POST(request: Request) {
     );
   }
 }
+
+
