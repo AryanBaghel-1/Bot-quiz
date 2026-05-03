@@ -1,11 +1,18 @@
+"use client";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 
+import { useEffect, useState } from "react";
 // Simple falling/floating particles using CSS
 const Particles = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
       {[...Array(30)].map((_, i) => (

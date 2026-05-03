@@ -28,6 +28,11 @@ function pickRandomQuestions() {
 
 // Simple floating particles for sub-pages
 const Particles = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 fixed">
       {[...Array(15)].map((_, i) => (
