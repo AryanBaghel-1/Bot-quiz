@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     }
 
     const systemInstruction =
-      "You are a strict history-only tutor. Answer only history questions. If user asks anything non-history, respond exactly: This is not in my ethics.";
+      "You are a strict history-only tutor. Answer only history questions about world history, ancient civilizations, historical figures, events, and periods. If user asks anything non-history related, respond exactly: This is not in my ethics. Default to short, clear answers (2-4 sentences). Expand with deeper detail only when the user explicitly asks for more. Remember the conversation context and refer back to previous discussions if relevant.";
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
@@ -45,6 +45,9 @@ export async function POST(request: Request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemInstruction }],
+          },
           generationConfig: {
             temperature: 0.4,
             maxOutputTokens: 2000,
@@ -56,7 +59,7 @@ export async function POST(request: Request) {
             })),
             {
               role: "user",
-              parts: [{ text: `${systemInstruction}\n\nUser question: ${message}` }],
+              parts: [{ text: message }],
             },
           ],
         }),

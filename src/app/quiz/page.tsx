@@ -58,6 +58,7 @@ export default function QuizPage() {
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const [selectedQuestions, setSelectedQuestions] = useState(quizData.slice(0, Math.min(10, quizData.length)));
   const [isHydrated, setIsHydrated] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
     setSelectedQuestions(pickRandomQuestions());
@@ -66,9 +67,9 @@ export default function QuizPage() {
 
   const { answers, answeredCount, score, percentage, submitted, selectAnswer, submitQuiz } = useQuiz(selectedQuestions);
 
-  const { seconds } = useTimer(!submitted);
-  const remainingSeconds = Math.max(0, QUIZ_DURATION_SECONDS - seconds);
-  const isTimeUp = remainingSeconds === 0;
+  const { seconds } = useTimer(!submitted && hasStarted);
+  const remainingSeconds = hasStarted ? Math.max(0, QUIZ_DURATION_SECONDS - seconds) : QUIZ_DURATION_SECONDS;
+  const isTimeUp = hasStarted && remainingSeconds === 0;
 
   const allAnswered = answeredCount === selectedQuestions.length;
 
@@ -140,7 +141,7 @@ export default function QuizPage() {
                   : "border-[#d4af37]/30 bg-[#d4af37]/10 text-[#f5d27a] shadow-[0_0_10px_rgba(212,175,55,0.1)]"
               }`}
             >
-              <span>Sands Remaining:</span>
+              <span>Time Remaining:</span>
               <span className="text-lg tabular-nums">{formatTime(remainingSeconds)}</span>
             </div>
           </div>
@@ -148,6 +149,20 @@ export default function QuizPage() {
           {!isHydrated ? (
             <div className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-md p-6 text-center text-[#9ca3af] animate-pulse">
               Unearthing ancient scrolls...
+            </div>
+          ) : !hasStarted ? (
+            <div className="space-y-6">
+              <div className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-md p-8 text-center text-[#d1d5db] shadow-[0_0_30px_rgba(212,175,55,0.08)]">
+                <h2 className="text-2xl font-bold text-[#f5d27a]">Ready to begin the history challenge?</h2>
+                <p className="mt-3 text-sm text-[#9ca3af]">
+                  Test your history knowledge and see how many chronicles you can unlock.
+                </p>
+                <div className="mt-6 flex justify-center">
+                  <Button onClick={() => setHasStarted(true)} className="px-10 py-6 text-lg tracking-wider font-semibold rounded-xl">
+                    Start Quiz
+                  </Button>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="space-y-8">

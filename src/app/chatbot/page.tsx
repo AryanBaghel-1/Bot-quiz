@@ -72,7 +72,7 @@ export default function ChatbotPage() {
                      <span className="w-2 h-2 bg-[#d4af37] rounded-full animate-bounce"></span>
                      <span className="w-2 h-2 bg-[#f5d27a] rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></span>
                      <span className="w-2 h-2 bg-[#e6c065] rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></span>
-                     <span className="text-xs text-[#f5d27a] ml-2 tracking-widest uppercase">Pondering...</span>
+                     <span className="text-xs text-[#f5d27a] ml-2 tracking-widest uppercase">Thinking...</span>
                   </div>
                 </div>
               )}

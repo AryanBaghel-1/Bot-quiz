@@ -27,7 +27,7 @@ export function useChat() {
     setIsLoading(true);
 
     try {
-      const data = await askHistoryChatbot(cleanContent, messages);
+      const data = await askHistoryChatbot(cleanContent, nextMessages);
 
       const botMessage: ChatMessage = {
         id: generateId(),

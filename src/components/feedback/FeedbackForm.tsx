@@ -11,7 +11,7 @@ type FeedbackFormProps = {
 };
 
 export function FeedbackForm({ onSubmit, isLoading }: FeedbackFormProps) {
-  const [rating, setRating] = useState(4);
+  const [rating, setRating] = useState(0);
   const [note, setNote] = useState("");
 
   return (
@@ -44,7 +44,7 @@ export function FeedbackForm({ onSubmit, isLoading }: FeedbackFormProps) {
         onClick={async () => {
           await onSubmit({ rating, note });
         }}
-        disabled={isLoading}
+        disabled={isLoading || rating === 0}
         className="w-full text-lg py-6 mt-2"
       >
         {isLoading ? "Consulting the Stars..." : "Analyze Archives"}

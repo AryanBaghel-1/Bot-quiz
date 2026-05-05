@@ -47,13 +47,12 @@ export async function POST(request: Request) {
       `User score: ${payload.submission.score}/${payload.submission.total} (${payload.submission.percentage}%)`,
       `Self rating: ${payload.rating}/5`,
       `User note: ${payload.note || "None"}`,
-      "Give clear feedback with:",
-      "1) strengths",
-      "2) weak areas",
-      "3) timeline tips",
-      "4) 5 specific next-practice topics",
-      "Keep it concise and beginner-friendly.",
-      "Question details:",
+      "Use ALL context above in your response.",
+      "Give feedback in this exact order:",
+      "1) Short appreciation (1-2 sentences).",
+      "2) Incorrect answers only: list each wrong question with the correct answer and one-sentence fix.",
+      "3) Focus areas: summarize the topics/patterns the user should improve.",
+      "4) Strengths: briefly mention what they did well.",
       details || "No details provided",
     ].join("\n");
 
@@ -75,7 +74,9 @@ export async function POST(request: Request) {
               parts: [
                 {
                   text:
-                    "You are a history quiz coach. Analyze quiz performance and provide improvement feedback.\n\n" +
+                    "You are a history quiz coach. Analyze the quiz and give actionable feedback. " +
+                    "Be precise about what was wrong and what to study. Always appreciate the user. " +
+                    "You must incorporate every detail provided in the prompt (including the user note and each question).\n\n" +
                     prompt,
                 },
               ],
