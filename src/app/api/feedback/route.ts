@@ -65,7 +65,7 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           generationConfig: {
-            temperature: 0.3,
+            temperature: 0.6,
             maxOutputTokens: 2000,
           },
           contents: [
