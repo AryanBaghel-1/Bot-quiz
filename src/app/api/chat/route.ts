@@ -49,7 +49,7 @@ export async function POST(request: Request) {
             parts: [{ text: systemInstruction }],
           },
           generationConfig: {
-            temperature: 0.4,
+            temperature: 0.6,
             maxOutputTokens: 2000,
           },
           contents: [
