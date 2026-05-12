@@ -11,8 +11,11 @@ import { Button } from "@/components/ui/Button";
 import { ProgressBar } from "@/components/quiz/ProgressBar";
 import { QuestionCard } from "@/components/quiz/QuestionCard";
 import { ResultBox } from "@/components/quiz/ResultBox";
+import { generateId } from "@/utils/helpers";
+import type { QuizAttemptSummary } from "@/types/quiz";
 
 const STORAGE_KEY = "history-quiz-submission";
+const ATTEMPTS_KEY = "history-quiz-attempts";
 const QUIZ_DURATION_SECONDS = 90;
 
 function pickRandomQuestions() {
@@ -103,7 +106,29 @@ export default function QuizPage() {
       submittedAt: new Date().toISOString(),
     };
 
+    const correctCount = details.filter((item) => item.isCorrect).length;
+    const wrongCount = selectedQuestions.length - correctCount;
+
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+
+    try {
+      const rawAttempts = localStorage.getItem(ATTEMPTS_KEY);
+      const attempts: QuizAttemptSummary[] = rawAttempts ? (JSON.parse(rawAttempts) as QuizAttemptSummary[]) : [];
+      const nextAttempt: QuizAttemptSummary = {
+        id: generateId(),
+        submittedAt: payload.submittedAt,
+        elapsedSeconds: payload.elapsedSeconds,
+        score: submission.score,
+        total: submission.total,
+        percentage: submission.percentage,
+        correctCount,
+        wrongCount,
+      };
+      const nextAttempts = [nextAttempt, ...attempts].slice(0, 50);
+      localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(nextAttempts));
+    } catch {
+      // Ignore history persistence errors (e.g. storage quota)
+    }
     setSubmittedAt(Math.min(seconds, QUIZ_DURATION_SECONDS));
   };
 

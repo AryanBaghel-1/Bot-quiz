@@ -57,7 +57,12 @@ export async function POST(request: Request) {
     ].join("\n");
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:gene
+✨
+AI Chatbot
+Consult our advanced AI to analyze historical events in detail with precision.
+
+📜rateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
@@ -65,7 +70,7 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           generationConfig: {
-            temperature: 0.6,
+            temperature: 0.3,
             maxOutputTokens: 2000,
           },
           contents: [

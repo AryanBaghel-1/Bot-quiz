@@ -5,6 +5,7 @@ const links = [
   { href: "/quiz", label: "Take Quiz" },
   { href: "/feedback", label: "View Feedback" },
   { href: "/chatbot", label: "Ask Chatbot" },
+  { href: "/settings", label: "Settings" },
 ];
 
 export function Sidebar({ className }: { className?: string }) {

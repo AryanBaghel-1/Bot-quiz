@@ -16,3 +16,14 @@ export type QuizSubmission = {
   total: number;
   percentage: number;
 };
+
+export type QuizAttemptSummary = {
+  id: string;
+  submittedAt: string;
+  elapsedSeconds: number;
+  score: number;
+  total: number;
+  percentage: number;
+  correctCount: number;
+  wrongCount: number;
+};

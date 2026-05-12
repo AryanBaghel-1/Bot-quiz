@@ -20,6 +20,9 @@ export function Navbar() {
           <Link href="/chatbot" className="rounded-lg px-3 py-1.5 transition-all duration-300 hover:bg-white/5 hover:text-[#f5d27a] hover:shadow-[inset_0_-2px_0_rgba(212,175,55,0.8)]">
             Chatbot
           </Link>
+          <Link href="/settings" className="rounded-lg px-3 py-1.5 transition-all duration-300 hover:bg-white/5 hover:text-[#f5d27a] hover:shadow-[inset_0_-2px_0_rgba(212,175,55,0.8)]">
+            Settings
+          </Link>
         </nav>
       </div>
     </header>
