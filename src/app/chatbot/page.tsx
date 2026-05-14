@@ -45,7 +45,7 @@ export default function ChatbotPage() {
       <Particles />
       <Navbar />
       <div className="mx-auto flex w-full max-w-8xl flex-1 z-10 relative">
-        <Sidebar className="hidden md:block" />
+        <Sidebar />
         <main className="flex-1 space-y-6 p-4 md:p-8 w-full mt-10 md:mt-2 max-w-4xl mx-auto flex flex-col h-[calc(100vh-6rem)]">
           <div className="text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 slide-up">
             <div>

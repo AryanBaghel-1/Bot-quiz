@@ -39,7 +39,7 @@ export default function Home() {
       <Particles />
       <Navbar />
       <div className="mx-auto flex w-full max-w-8xl flex-1 z-10 relative">
-        <Sidebar className="hidden md:block" />
+        <Sidebar />
         <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-6 w-full mt-10 md:mt-0">
           <div className="w-full max-w-5xl mx-auto space-y-16 text-center animate-in fade-in zoom-in duration-700">
             <div className="space-y-6 slide-up">

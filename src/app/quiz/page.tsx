@@ -152,7 +152,7 @@ export default function QuizPage() {
       <Particles />
       <Navbar />
       <div className="mx-auto flex w-full max-w-8xl flex-1 z-10 relative">
-        <Sidebar className="hidden md:block" />
+        <Sidebar />
         <main className="flex-1 space-y-8 p-4 md:p-8 w-full mt-10 md:mt-2 max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 slide-up">
             <h1 className="bg-gradient-to-r from-[#f5d27a] via-[#e6c065] to-[#d4af37] bg-clip-text text-3xl font-bold text-transparent drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">
