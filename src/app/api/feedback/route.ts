@@ -57,12 +57,7 @@ export async function POST(request: Request) {
     ].join("\n");
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:gene
-✨
-AI Chatbot
-Consult our advanced AI to analyze historical events in detail with precision.
-
-📜rateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {

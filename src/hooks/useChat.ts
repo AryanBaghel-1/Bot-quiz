@@ -10,7 +10,7 @@ export function useChat() {
   const [isLoading, setIsLoading] = useState(false);
 
   const sendMessage = async (content: string) => {
-    const cleanContent = content.trim();http://localhost:3000/feedback
+    const cleanContent = content.trim();
     if (!cleanContent) {
       return;
     }

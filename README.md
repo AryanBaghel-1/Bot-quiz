@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Chronicles of Time (AI History Quiz + Chatbot)
 
-First, run the development server:
+A Next.js app for practicing history MCQs, reviewing your score (correct vs wrong), getting AI feedback on your quiz, and chatting with a **history-only** AI tutor.
+
+## What this project does
+
+- **Quiz**: Take a timed history quiz (random questions per attempt), submit answers, and see your score.
+- **Settings / Marks history**: Review your previous marks with **correct vs wrong** counts.
+- **AI Feedback (Oracle)**: After a quiz, request AI-generated coaching based on what you missed.
+- **History-only Chatbot**: Ask history questions; non-history prompts are rejected by the system instruction.
+
+## Tech stack
+
+- Next.js (App Router)
+- React + TypeScript
+- Tailwind CSS
+- ESLint
+- Gemini API (optional; for chatbot + feedback)
+
+## Pages & routes
+
+- `/` — Home
+- `/quiz` — Timed quiz + results
+- `/feedback` — Feedback form + AI evaluation based on the latest quiz submission
+- `/chatbot` — History-only chat experience
+- `/settings` — View previous quiz marks (correct/wrong)
+
+### API routes
+
+- `POST /api/chat`
+	- Body: `{ message: string, history?: Array<{ role: "user" | "assistant"; content: string }> }`
+	- Response: `{ reply: string }`
+
+- `POST /api/feedback`
+	- Body: `{ submission: { score: number; total: number; percentage: number; details?: ... }, rating: number, note?: string }`
+	- Response: `{ analysis: string }`
+
+## Local storage
+
+The app stores quiz submissions locally in the browser:
+
+- `history-quiz-submission` — the **latest** completed quiz submission (used by `/feedback`)
+- `history-quiz-attempts` — an array of attempt summaries for `/settings` (includes correct/wrong counts)
+
+## Getting started
+
+### 1) Install dependencies
+
+Using Bun:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd frontend
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or using npm:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd frontend
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2) Configure environment (optional, enables AI)
 
-## Learn More
+Create `frontend/.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+GEMINI_API_KEY=your_key_here
+# Optional:
+GEMINI_MODEL=your-model-name
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If `GEMINI_API_KEY` is not set:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Chatbot replies with a friendly “API key missing” message.
+- Feedback page returns a basic fallback message with your score.
 
-## Deploy on Vercel
+### 3) Run the app
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+cd frontend
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Or:
+
+```bash
+cd frontend
+bun run dev
+```
+
+Then open http://localhost:3000
+
+## Scripts
+
+- `dev` — start the dev server
+- `build` — production build
+- `start` — run the production server
+- `lint` — run ESLint
+
+## Notes
+
+- The quiz uses a fixed duration (90 seconds) and picks up to 10 random questions per attempt.
+- The sidebar supports a collapsed mode where icons are shown, and an expanded mode where labels are shown.
+- An initial full-screen loading page displays briefly before the app content.
+
